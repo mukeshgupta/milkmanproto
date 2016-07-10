@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="milkmanApp" ng-controller="orderCtrl">
+<h2>Create new order</h2>
+  <form novalidate>
+    Date:<br>
+    <input type="date" ng-model="currentOrder.orderDelvDate"><br>
+    Building:<br>
+  	<SELECT ng-model="currentOrder.bldg" prompt="Select Bldg" ng-change="filterCustomer()">
+  		<option ng-repeat="bldg in allBldgs">{{bldg.bldgName}}</option>
+  	</SELECT>
+    <br><br>
+    Customer:<br>
+  	<SELECT ng-model="currentOrder.customer" prompt="Select Customer">
+  		<option ng-repeat="customer in selectedBldgCustomers">{{customer.name}}</option>
+  	</SELECT>
+    <br><br>
+    Item:<br>
+  	<SELECT ng-options="items"></SELECT>
+    <br><br>
+    QTY:<br>
+  	<input type="number" ng-model="currentOrder.itemQty">
+    <br><br>
+    <button ng-click="save()">Save</button>
+    <button ng-click="reset()">Cancel</button>
+  </form>
+ 
+</div>
+
+<script>
+var app = angular.module('milkmanApp', []);
+app.controller('orderCtrl', function($scope) {
+    $scope.currentOrder = {};
+    $scope.pendingOrders = [];
+    $scope.allBldgs = [{bldgName:'Shree Krishna',bldgCode:'SKS',code:1},{bldgName:'Shree Vallabh',bldgCode:'VLB',code:2}];
+    $scope.customers = [{name:'Mukesh',code:1,bldgCode:1},{name:'Rakesh',code:2,bldgCode:2}];
+    $scope.items = [{name:'ITEM1',code:1},{name:'ITEM2',code:2}];
+
+    
+    $scope.reset = function() {
+        $scope.currentOrder = {};
+    };
+    $scope.save  = function(){
+
+    }
+    $scope.reset();
+
+
+    function init(){
+    	$scope.currentOrder = {}
+    }
+
+    init();
+
+    $scope.filterCustomer = function(){
+    	$scope.selectedBldgCustomers = [];
+    }
+});
+</script>
+</body>
+</html>
